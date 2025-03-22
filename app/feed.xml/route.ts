@@ -18,7 +18,7 @@ export async function GET() {
     title: 'Your Blog Name',
     description: 'Your blog description',
     feed_url: `${process.env.NEXT_PUBLIC_SITE_URL}/feed.xml`,
-    site_url: process.env.NEXT_PUBLIC_SITE_URL,
+    site_url: process.env.NEXT_PUBLIC_SITE_URL || '',
     language: 'en',
   })
 

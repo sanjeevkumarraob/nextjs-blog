@@ -27,11 +27,11 @@ export function PostPreview({ post, onDelete }: PostPreviewProps) {
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <div className="flex items-center space-x-4">
           <Avatar>
-            <AvatarImage src={post.author.avatar_url || ''} />
-            <AvatarFallback>{post.author.username?.[0]?.toUpperCase()}</AvatarFallback>
+            <AvatarImage src={post.author?.avatar_url || ''} />
+            <AvatarFallback>{post.author?.username?.[0]?.toUpperCase()}</AvatarFallback>
           </Avatar>
           <div className="space-y-1">
-            <h4 className="text-sm font-semibold">{post.author.username}</h4>
+            <h4 className="text-sm font-semibold">{post.author?.username}</h4>
             <p className="text-sm text-muted-foreground">
               {formatDistanceToNow(new Date(post.created_at), { addSuffix: true })}
             </p>
@@ -62,8 +62,8 @@ export function PostPreview({ post, onDelete }: PostPreviewProps) {
         </Link>
         <div className="flex flex-wrap gap-2 mt-4">
           {post.tags?.map((tag) => (
-            <Badge key={tag.id} variant="secondary">
-              {tag.name}
+            <Badge key={tag} variant="secondary">
+              {tag}
             </Badge>
           ))}
         </div>

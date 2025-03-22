@@ -3,7 +3,7 @@
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import Editor from './Editor'
+import { Editor } from './Editor'
 import { BlogPost } from '@/types/blog'
 import TagSelector from './TagSelector'
 import { Button } from "@/components/ui/button"

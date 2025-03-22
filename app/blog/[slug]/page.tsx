@@ -6,17 +6,18 @@ import BlogPostContent from '@/components/blog/BlogPostContent'
 export default async function BlogPostPage({
   params
 }: {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }) {
+  const { slug } = await params;
   const cookieStore = cookies()
   const supabase = createServerComponentClient({ cookies: () => cookieStore })
   
-  console.log("Fetching post with slug:", params.slug)
+  console.log("Fetching post with slug:", slug)
 
   // Use your RPC function
   const { data: postData, error: rpcError } = await supabase.rpc(
     'get_post_by_slug',
-    { post_slug: params.slug }
+    { post_slug: slug }
   );
 
   if (rpcError) {
@@ -31,7 +32,7 @@ export default async function BlogPostPage({
     const { data: post, error } = await supabase
       .from('posts')
       .select('*, author_id')
-      .eq('slug', params.slug)
+      .eq('slug', slug)
       .eq('status', 'published')
       .single();
 

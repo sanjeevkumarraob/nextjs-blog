@@ -3,13 +3,17 @@ import { cookies } from 'next/headers'
 import { notFound } from 'next/navigation'
 import PostForm from '@/components/blog/PostForm'
 
-export default async function EditPostPage({ params }: { params: { slug: string } }) {
+interface PageProps {
+  params: Promise<{ slug: string }>;
+}
+
+export default async function EditPostPage({ params }: PageProps) {
   const supabase = createServerComponentClient({ cookies })
-  
+  const { slug } = await params;
   const { data: post } = await supabase
     .from('posts')
     .select()
-    .eq('slug', params.slug)
+    .eq('slug', slug)
     .single()
 
   if (!post) {

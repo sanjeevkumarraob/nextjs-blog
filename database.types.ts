@@ -190,15 +190,7 @@ export type Database = {
           updated_at?: string | null
           view_count?: number | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "posts_author_id_fkey"
-            columns: ["author_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          }
-        ]
+        Relationships: []
       }
       profiles: {
         Row: {
@@ -233,6 +225,30 @@ export type Database = {
         }
         Relationships: []
       }
+      subscribers: {
+        Row: {
+          confirm_token: string | null
+          confirmed: boolean | null
+          created_at: string | null
+          email: string
+          id: string
+        }
+        Insert: {
+          confirm_token?: string | null
+          confirmed?: boolean | null
+          created_at?: string | null
+          email: string
+          id?: string
+        }
+        Update: {
+          confirm_token?: string | null
+          confirmed?: boolean | null
+          created_at?: string | null
+          email?: string
+          id?: string
+        }
+        Relationships: []
+      }
       tags: {
         Row: {
           created_at: string | null
@@ -259,25 +275,44 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      add_subscriber: {
+        Args: {
+          subscriber_email: string
+        }
+        Returns: Json
+      }
       get_blog_stats: {
         Args: Record<PropertyKey, never>
         Returns: Json
       }
-      get_published_posts_with_authors: {
-        Args: {};
+      get_post_by_slug: {
+        Args: {
+          post_slug: string
+        }
         Returns: {
-          id: string;
-          title: string;
-          excerpt: string | null;
-          slug: string;
-          created_at: string | null;
-          published_at: string | null;
-          tags: string[] | null;
-          author: {
-            username: string | null;
-            full_name: string | null;
-          } | null;
-        }[];
+          id: string
+          title: string
+          content: string
+          excerpt: string
+          slug: string
+          created_at: string
+          published_at: string
+          tags: string[]
+          author: Json
+        }[]
+      }
+      get_published_posts_with_authors: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          id: string
+          title: string
+          excerpt: string
+          slug: string
+          created_at: string
+          published_at: string
+          tags: string[]
+          author: Json
+        }[]
       }
     }
     Enums: {
@@ -385,6 +420,4 @@ export type CompositeTypes<
   : PublicCompositeTypeNameOrOptions extends keyof PublicSchema["CompositeTypes"]
     ? PublicSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
     : never
-
-export type Profile = Database['public']['Tables']['profiles']['Row'];
 
