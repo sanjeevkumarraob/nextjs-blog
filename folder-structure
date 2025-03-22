@@ -1,0 +1,28 @@
+blog-platform/
+├── app/
+│   ├── (auth)/
+│   │   ├── login/
+│   │   └── signup/
+│   ├── blog/
+│   │   ├── [slug]/
+│   │   └── page.tsx
+│   ├── about/
+│   │   └── page.tsx
+│   ├── layout.tsx
+│   ├── page.tsx
+│   └── globals.css
+├── components/
+│   ├── auth/
+│   ├── blog/
+│   └── shared/
+│       └── Navbar.tsx
+├── lib/
+│   ├── supabase/
+│   │   └── config.ts
+│   └── utils/
+├── types/
+│   └── blog.ts
+├── tsconfig.json
+├── tailwind.config.js
+├── postcss.config.js
+└── package.json 
