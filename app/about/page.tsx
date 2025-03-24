@@ -20,39 +20,40 @@ export default function AboutPage() {
       <div className="flex flex-col md:flex-row gap-8 mb-12">
         <div className="md:w-1/3">
           <div className="rounded-xl overflow-hidden border shadow-sm bg-white">
-            <Image 
-              src="/profile-image.jpg" 
-              alt="Sanjeev Kumar Badrinath" 
-              width={300} 
-              height={300} 
+            <Image
+              src="/profile-image.jpg"
+              alt="Sanjeev Kumar Badrinath"
+              width={300}
+              height={300}
               className="w-full h-auto object-cover"
               priority
             />
             <div className="p-4">
-              <h2 className="text-2xl font-bold text-slate-800">Sanjeev Kumar Badrinath</h2>
-              <p className="text-slate-600 mb-4">Full Stack Developer & Engineering Leader</p>
-              
+              <h2 className="text-2xl font-bold text-slate-800">
+                Sanjeev Kumar Badrinath
+              </h2>
+              <p className="text-slate-600 mb-4">
+                Senior DevOps Engineer & Platform Architect
+              </p>
+
               <div className="flex flex-wrap gap-2 mt-4">
                 <Button variant="outline" size="sm" asChild>
-                  <Link href="https://www.linkedin.com/in/sanjeevkumar-badrinath/" target="_blank">
+                  <Link
+                    href="https://www.linkedin.com/in/sanjeevkumar-badrinath/"
+                    target="_blank"
+                  >
                     <Linkedin className="h-4 w-4 mr-2" />
                     LinkedIn
                   </Link>
                 </Button>
                 <Button variant="outline" size="sm" asChild>
-                  <Link href="https://github.com/yourusername" target="_blank">
-                    <Github className="h-4 w-4 mr-2" />
-                    GitHub
-                  </Link>
-                </Button>
-                <Button variant="outline" size="sm" asChild>
-                  <Link href="mailto:youremail@example.com">
+                  <Link href="mailto:sanjeevkumarrao@gmail.com">
                     <Mail className="h-4 w-4 mr-2" />
                     Email
                   </Link>
                 </Button>
                 <Button variant="outline" size="sm" asChild>
-                  <Link href="/resume.pdf" target="_blank">
+                  <Link href="/Sanjeev_kumar_badrinath_resume.pdf" target="_blank">
                     <FileText className="h-4 w-4 mr-2" />
                     Resume
                   </Link>
@@ -61,18 +62,15 @@ export default function AboutPage() {
             </div>
           </div>
         </div>
-        
+
         <div className="md:w-2/3">
           <Card className="p-6 shadow-sm h-full">
-            <h3 className="text-xl font-bold mb-4 text-slate-800">Summary</h3>
+            <h3 className="text-xl font-bold mb-4 text-slate-800">Professional Summary</h3>
             <p className="text-slate-600 mb-4">
-              Experienced software engineer with a track record of building scalable web applications. 
-              Passionate about creating elegant solutions to complex problems through clean, maintainable code.
-              Skilled in full-stack development, with expertise in Next.js, React, TypeScript, and cloud infrastructure.
+              Senior DevOps Engineer and Platform Architect with 16+ years of experience in cloud infrastructure, automation, and full-stack development. Expert in designing and implementing cloud-native solutions with recent focus on AI/ML infrastructure. Proven track record in leading complex platform migrations, architecting scalable solutions, and driving innovation across enterprise environments.
             </p>
-            <p className="text-slate-600">
-              Currently focused on developing modern web applications that deliver exceptional user experiences.
-              Strong believer in continuous learning and staying updated with the latest technologies and best practices.
+            <p className="text-slate-600 mb-4">
+              Core Competencies: Cloud Platform Architecture & Migration, DevOps & Infrastructure Automation, AI/ML Infrastructure Management, API Platform Design & Implementation, Team Leadership & Cross-functional Collaboration, Continuous Integration/Deployment (CI/CD).
             </p>
           </Card>
         </div>
@@ -80,154 +78,112 @@ export default function AboutPage() {
 
       {/* Experience Section */}
       <section className="mb-12">
-        <h3 className="text-2xl font-bold mb-6 text-slate-800">Work Experience</h3>
-        
+        <h3 className="text-2xl font-bold mb-6 text-slate-800">
+          Work Experience
+        </h3>
+
         <div className="space-y-6">
           <Card className="p-6 shadow-sm">
             <div className="flex flex-col md:flex-row justify-between mb-2">
-              <h4 className="text-lg font-bold text-slate-800">Senior Software Engineer</h4>
-              <span className="text-slate-500">Jan 2021 - Present</span>
+              <h4 className="text-lg font-bold text-slate-800">
+                Senior DevOps Engineer
+              </h4>
+              <span className="text-slate-500">June 2022 - Present</span>
             </div>
-            <h5 className="text-primary font-medium mb-2">Company Name</h5>
+            <h5 className="text-primary font-medium mb-2">PEXA Ltd</h5>
             <p className="text-slate-600 mb-4">
-              Led the development of a high-performance web application serving thousands of users.
-              Implemented modern front-end architecture using React, TypeScript, and Next.js.
-              Collaborated with cross-functional teams to define and implement product features.
+              Led the APIM Platform team, responsible for enabling and consuming APIs through KONG gateway. Key achievements include:
             </p>
-            <div className="flex flex-wrap gap-2">
-              <span className="px-2 py-1 bg-slate-100 text-slate-700 text-xs rounded">Next.js</span>
-              <span className="px-2 py-1 bg-slate-100 text-slate-700 text-xs rounded">React</span>
-              <span className="px-2 py-1 bg-slate-100 text-slate-700 text-xs rounded">TypeScript</span>
-              <span className="px-2 py-1 bg-slate-100 text-slate-700 text-xs rounded">AWS</span>
-            </div>
+            <ul className="list-disc list-inside text-slate-600 mb-4 space-y-2">
+              <li>Successfully designed and implemented the APIM platform from ground up as an individual contributor</li>
+              <li>Spearheaded complete re-architecture, migrating from Kong Enterprise to Kong Konnect with Auth0 integration</li>
+              <li>Took ownership of PEXA AI Assistant and managed it independently</li>
+              <li>Won Best Marketing award in company Hackathon</li>
+              <li>Completed AWS Certified AI Practitioner certification</li>
+            </ul>
           </Card>
-          
+
           <Card className="p-6 shadow-sm">
             <div className="flex flex-col md:flex-row justify-between mb-2">
-              <h4 className="text-lg font-bold text-slate-800">Software Developer</h4>
-              <span className="text-slate-500">Jun 2018 - Dec 2020</span>
+              <h4 className="text-lg font-bold text-slate-800">
+                Senior DevOps Engineer
+              </h4>
+              <span className="text-slate-500">April 2021 - June 2022</span>
             </div>
-            <h5 className="text-primary font-medium mb-2">Previous Company</h5>
+            <h5 className="text-primary font-medium mb-2">Cognizant Technology Solutions (ANZ Bank)</h5>
             <p className="text-slate-600 mb-4">
-              Developed and maintained multiple web applications using JavaScript, React, and Node.js.
-              Optimized database queries and API endpoints to improve application performance.
-              Participated in code reviews and mentored junior developers.
+              Worked with the Business Bankers Lending team, handling lending applications for small and medium businesses. Notable achievements:
             </p>
-            <div className="flex flex-wrap gap-2">
-              <span className="px-2 py-1 bg-slate-100 text-slate-700 text-xs rounded">JavaScript</span>
-              <span className="px-2 py-1 bg-slate-100 text-slate-700 text-xs rounded">React</span>
-              <span className="px-2 py-1 bg-slate-100 text-slate-700 text-xs rounded">Node.js</span>
-              <span className="px-2 py-1 bg-slate-100 text-slate-700 text-xs rounded">MongoDB</span>
-            </div>
+            <ul className="list-disc list-inside text-slate-600 mb-4">
+              <li>Automated local setup of 14+ micro services using a single command, saving 800+ hours of developer time</li>
+              <li>Created Synthetic Monitoring for end-to-end application flow using Dynatrace</li>
+            </ul>
           </Card>
         </div>
-      </section>
-
-      {/* Education Section */}
-      <section className="mb-12">
-        <h3 className="text-2xl font-bold mb-6 text-slate-800">Education</h3>
-        
-        <Card className="p-6 shadow-sm">
-          <div className="flex flex-col md:flex-row justify-between mb-2">
-            <h4 className="text-lg font-bold text-slate-800">Master of Science in Computer Science</h4>
-            <span className="text-slate-500">2016 - 2018</span>
-          </div>
-          <h5 className="text-primary font-medium mb-2">University Name</h5>
-          <p className="text-slate-600">
-            Focused on advanced algorithms, distributed systems, and machine learning.
-            Graduated with distinction.
-          </p>
-        </Card>
       </section>
 
       {/* Skills Section */}
       <section className="mb-12">
-        <h3 className="text-2xl font-bold mb-6 text-slate-800">Skills</h3>
-        
+        <h3 className="text-2xl font-bold mb-6 text-slate-800">Technical Expertise</h3>
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Card className="p-6 shadow-sm">
-            <h4 className="text-lg font-bold mb-4 text-slate-800">Technical Skills</h4>
+            <h4 className="text-lg font-bold mb-4 text-slate-800">
+              Cloud & Infrastructure
+            </h4>
             <div className="flex flex-wrap gap-2">
-              <span className="px-3 py-1 bg-primary/10 text-primary font-medium rounded-full">JavaScript</span>
-              <span className="px-3 py-1 bg-primary/10 text-primary font-medium rounded-full">TypeScript</span>
-              <span className="px-3 py-1 bg-primary/10 text-primary font-medium rounded-full">React</span>
-              <span className="px-3 py-1 bg-primary/10 text-primary font-medium rounded-full">Next.js</span>
-              <span className="px-3 py-1 bg-primary/10 text-primary font-medium rounded-full">Node.js</span>
-              <span className="px-3 py-1 bg-primary/10 text-primary font-medium rounded-full">SQL</span>
-              <span className="px-3 py-1 bg-primary/10 text-primary font-medium rounded-full">NoSQL</span>
               <span className="px-3 py-1 bg-primary/10 text-primary font-medium rounded-full">AWS</span>
+              <span className="px-3 py-1 bg-primary/10 text-primary font-medium rounded-full">GCP</span>
+              <span className="px-3 py-1 bg-primary/10 text-primary font-medium rounded-full">Kubernetes</span>
               <span className="px-3 py-1 bg-primary/10 text-primary font-medium rounded-full">Docker</span>
-              <span className="px-3 py-1 bg-primary/10 text-primary font-medium rounded-full">CI/CD</span>
+              <span className="px-3 py-1 bg-primary/10 text-primary font-medium rounded-full">Kong</span>
+              <span className="px-3 py-1 bg-primary/10 text-primary font-medium rounded-full">Terraform</span>
+              <span className="px-3 py-1 bg-primary/10 text-primary font-medium rounded-full">Auth0</span>
+              <span className="px-3 py-1 bg-primary/10 text-primary font-medium rounded-full">OKTA</span>
             </div>
           </Card>
-          
+
           <Card className="p-6 shadow-sm">
-            <h4 className="text-lg font-bold mb-4 text-slate-800">Soft Skills</h4>
+            <h4 className="text-lg font-bold mb-4 text-slate-800">
+              Development & Automation
+            </h4>
             <div className="flex flex-wrap gap-2">
-              <span className="px-3 py-1 bg-secondary/10 text-secondary font-medium rounded-full">Team Leadership</span>
-              <span className="px-3 py-1 bg-secondary/10 text-secondary font-medium rounded-full">Project Management</span>
-              <span className="px-3 py-1 bg-secondary/10 text-secondary font-medium rounded-full">Problem Solving</span>
-              <span className="px-3 py-1 bg-secondary/10 text-secondary font-medium rounded-full">Communication</span>
-              <span className="px-3 py-1 bg-secondary/10 text-secondary font-medium rounded-full">Mentoring</span>
-              <span className="px-3 py-1 bg-secondary/10 text-secondary font-medium rounded-full">Agile Methodologies</span>
+              <span className="px-3 py-1 bg-secondary/10 text-secondary font-medium rounded-full">Python</span>
+              <span className="px-3 py-1 bg-secondary/10 text-secondary font-medium rounded-full">Ruby</span>
+              <span className="px-3 py-1 bg-secondary/10 text-secondary font-medium rounded-full">React</span>
+              <span className="px-3 py-1 bg-secondary/10 text-secondary font-medium rounded-full">NextJS</span>
+              <span className="px-3 py-1 bg-secondary/10 text-secondary font-medium rounded-full">Jenkins</span>
+              <span className="px-3 py-1 bg-secondary/10 text-secondary font-medium rounded-full">GitHub Actions</span>
+              <span className="px-3 py-1 bg-secondary/10 text-secondary font-medium rounded-full">NodeJS</span>
             </div>
           </Card>
-        </div>
-      </section>
 
-      {/* Projects Section (Optional) */}
-      <section className="mb-12">
-        <h3 className="text-2xl font-bold mb-6 text-slate-800">Featured Projects</h3>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Card className="p-6 shadow-sm">
-            <h4 className="text-lg font-bold text-slate-800">Personal Blog & Portfolio</h4>
-            <p className="text-slate-600 mb-4">
-              A modern blog and portfolio site built with Next.js, TypeScript, and Supabase.
-              Features include user authentication, blog management, newsletter subscription, and more.
-            </p>
-            <div className="flex gap-2 mt-auto">
-              <Button variant="outline" size="sm" asChild>
-                <Link href="#">
-                  <Github className="h-4 w-4 mr-2" />
-                  GitHub
-                </Link>
-              </Button>
-              <Button variant="outline" size="sm" asChild>
-                <Link href="#">
-                  View Demo
-                </Link>
-              </Button>
+            <h4 className="text-lg font-bold mb-4 text-slate-800">
+              Certifications
+            </h4>
+            <div className="flex flex-wrap gap-2">
+              <span className="px-3 py-1 bg-accent/10 text-accent font-medium rounded-full">AWS Certified AI Practitioner (2024)</span>
+              <span className="px-3 py-1 bg-accent/10 text-accent font-medium rounded-full">Hashicorp Certified Terraform Associate</span>
+              <span className="px-3 py-1 bg-accent/10 text-accent font-medium rounded-full">ISC2 Certified in Cybersecurity</span>
+              <span className="px-3 py-1 bg-accent/10 text-accent font-medium rounded-full">SAFe Certified Scrum Master</span>
             </div>
           </Card>
-          
-          {/* Add more projects as needed */}
-        </div>
-      </section>
 
-      {/* Contact Section */}
-      <section className="mb-12">
-        <h3 className="text-2xl font-bold mb-6 text-slate-800">Get In Touch</h3>
-        
-        <Card className="p-6 shadow-sm">
-          <p className="text-slate-600 mb-6">
-            I'm always open to discussing new projects, opportunities, or partnerships. 
-            Feel free to reach out through any of the channels below:
-          </p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="flex items-center">
-              <Mail className="h-5 w-5 mr-3 text-primary" />
-              <span className="text-slate-700">youremail@example.com</span>
+          <Card className="p-6 shadow-sm">
+            <h4 className="text-lg font-bold mb-4 text-slate-800">
+              Monitoring & Tools
+            </h4>
+            <div className="flex flex-wrap gap-2">
+              <span className="px-3 py-1 bg-primary/10 text-primary font-medium rounded-full">Splunk</span>
+              <span className="px-3 py-1 bg-primary/10 text-primary font-medium rounded-full">Dynatrace</span>
+              <span className="px-3 py-1 bg-primary/10 text-primary font-medium rounded-full">AppDynamics</span>
+              <span className="px-3 py-1 bg-primary/10 text-primary font-medium rounded-full">SumoLogic</span>
+              <span className="px-3 py-1 bg-primary/10 text-primary font-medium rounded-full">Atlassian Suite</span>
+              <span className="px-3 py-1 bg-primary/10 text-primary font-medium rounded-full">RabbitMQ</span>
             </div>
-            <div className="flex items-center">
-              <Linkedin className="h-5 w-5 mr-3 text-primary" />
-              <Link href="https://www.linkedin.com/in/sanjeevkumar-badrinath/" target="_blank" className="text-primary hover:underline">
-                LinkedIn Profile
-              </Link>
-            </div>
-          </div>
-        </Card>
+          </Card>
+        </div>
       </section>
     </div>
   )
