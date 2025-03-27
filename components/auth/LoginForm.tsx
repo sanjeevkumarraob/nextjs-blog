@@ -9,6 +9,8 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
+import { Loader2 } from 'lucide-react'
+import { toast } from 'sonner'
 
 export default function LoginForm() {
   const [email, setEmail] = useState('')
@@ -24,6 +26,9 @@ export default function LoginForm() {
     setError(null)
 
     try {
+      // Show loading toast
+      toast.loading('Signing in...')
+      
       const { error } = await supabase.auth.signInWithPassword({
         email,
         password,
@@ -31,11 +36,15 @@ export default function LoginForm() {
 
       if (error) throw error
 
+      // Show success toast
+      toast.success('Signed in successfully')
+      
       router.push('/dashboard')
       router.refresh()
     } catch (error: unknown) {
       const authError = error as AuthError
       setError(authError)
+      toast.error(authError.message || 'Failed to sign in')
     } finally {
       setLoading(false)
     }
@@ -56,6 +65,7 @@ export default function LoginForm() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              disabled={loading}
             />
           </div>
 
@@ -67,6 +77,7 @@ export default function LoginForm() {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              disabled={loading}
             />
           </div>
 
@@ -79,20 +90,39 @@ export default function LoginForm() {
             className="w-full"
             disabled={loading}
           >
-            {loading ? 'Loading...' : 'Sign In'}
+            {loading ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Signing in...
+              </>
+            ) : (
+              'Sign In'
+            )}
           </Button>
         </form>
       </CardContent>
       <CardFooter className="flex flex-col space-y-2">
-        <Link href="/forgot-password" className="text-sm text-muted-foreground hover:text-primary">
+        <Link 
+          href="/forgot-password" 
+          className="text-sm text-muted-foreground hover:text-primary"
+          onClick={(e) => loading && e.preventDefault()}
+        >
           Forgot your password?
         </Link>
-        <Link href="/magic-link" className="text-sm text-muted-foreground hover:text-primary">
+        <Link 
+          href="/magic-link" 
+          className="text-sm text-muted-foreground hover:text-primary"
+          onClick={(e) => loading && e.preventDefault()}
+        >
           Sign in with Magic Link
         </Link>
         <div className="text-sm text-muted-foreground">
           Don't have an account?{' '}
-          <Link href="/signup" className="text-primary hover:underline">
+          <Link 
+            href="/signup" 
+            className="text-primary hover:underline"
+            onClick={(e) => loading && e.preventDefault()}
+          >
             Sign up
           </Link>
         </div>

@@ -208,18 +208,20 @@ export function Editor({ initialContent = '', onChange, placeholder = 'Start wri
               input.onchange = async () => {
                 if (input.files?.length) {
                   try {
-                    const url = await handleImageUpload(input.files[0])
-                    // Wrap state updates in setTimeout to avoid potential React 18 issues
-                    setTimeout(() => {
-                      console.log('Setting image with URL:', url);
-                      editor.chain().focus().setImage({ src: url, alt: 'Uploaded image' }).run()
-                    }, 0);
+                    const file = input.files[0]
+                    // Show loading toast
+                    toast.loading('Uploading image...')
+                    
+                    const url = await handleImageUpload(file)
+                    
+                    // Update editor content without resetting form
+                    editor.chain().focus().setImage({ src: url, alt: file.name }).run()
+                    
+                    // Show success toast
+                    toast.success('Image uploaded successfully')
                   } catch (error) {
-                    // Wrap toast in setTimeout
-                    setTimeout(() => {
-                      toast.error('Failed to upload image');
-                    }, 0);
                     console.error('Failed to upload image:', error)
+                    toast.error('Failed to upload image. Please try again.')
                   }
                 }
               }
