@@ -35,7 +35,8 @@ export default function TagSelector({ selectedTags, onChange }: TagSelectorProps
     fetchTags()
   }, [supabase])
 
-  const handleAddTag = async () => {
+  const handleAddTag = async (e: React.MouseEvent) => {
+    e.preventDefault()
     if (!newTag.trim()) return
 
     const slug = newTag.toLowerCase().replace(/[^a-z0-9]+/g, '-')
@@ -84,7 +85,10 @@ export default function TagSelector({ selectedTags, onChange }: TagSelectorProps
           onChange={(e) => setNewTag(e.target.value)}
           placeholder="Add new tag"
         />
-        <Button onClick={handleAddTag}>
+        <Button 
+          type="button"
+          onClick={handleAddTag}
+        >
           Add
         </Button>
       </div>
