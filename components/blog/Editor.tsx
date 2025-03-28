@@ -200,34 +200,38 @@ export function Editor({ initialContent = '', onChange, placeholder = 'Start wri
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => {
+            onClick={(e) => {
+              e.preventDefault()
+              e.stopPropagation()
+              
               const input = document.createElement('input')
               input.type = 'file'
               input.accept = 'image/*'
               
-              input.onchange = async () => {
+              input.onchange = async (e) => {
+                e.preventDefault()
                 if (input.files?.length) {
+                  const file = input.files[0]
+                  const loadingToastId = toast.loading('Uploading image...')
+                  
                   try {
-                    const file = input.files[0]
-                    // Show loading toast
-                    toast.loading('Uploading image...')
-                    
                     const url = await handleImageUpload(file)
-                    
-                    // Update editor content without resetting form
                     editor.chain().focus().setImage({ src: url, alt: file.name }).run()
-                    
-                    // Show success toast
+                    toast.dismiss(loadingToastId)
                     toast.success('Image uploaded successfully')
                   } catch (error) {
                     console.error('Failed to upload image:', error)
+                    toast.dismiss(loadingToastId)
                     toast.error('Failed to upload image. Please try again.')
                   }
                 }
               }
               
               input.click()
+              return false
             }}
+            type="button"
+            className={editor.isActive('image') ? 'bg-muted' : ''}
           >
             <ImageIcon className="h-4 w-4" />
           </Button>

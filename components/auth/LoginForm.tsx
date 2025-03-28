@@ -25,10 +25,9 @@ export default function LoginForm() {
     setLoading(true)
     setError(null)
 
+    const loadingToastId = toast.loading('Signing in...')
+
     try {
-      // Show loading toast
-      toast.loading('Signing in...')
-      
       const { error } = await supabase.auth.signInWithPassword({
         email,
         password,
@@ -36,7 +35,7 @@ export default function LoginForm() {
 
       if (error) throw error
 
-      // Show success toast
+      toast.dismiss(loadingToastId)
       toast.success('Signed in successfully')
       
       router.push('/dashboard')
@@ -44,6 +43,7 @@ export default function LoginForm() {
     } catch (error: unknown) {
       const authError = error as AuthError
       setError(authError)
+      toast.dismiss(loadingToastId)
       toast.error(authError.message || 'Failed to sign in')
     } finally {
       setLoading(false)
