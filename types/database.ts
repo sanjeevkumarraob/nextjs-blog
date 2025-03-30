@@ -134,6 +134,22 @@ export interface Database {
           }
         }[]
       }
+      get_published_posts_with_authors: {
+        Args: Record<string, never>
+        Returns: {
+          id: string
+          title: string
+          excerpt: string | null
+          slug: string
+          created_at: string
+          published_at: string | null
+          tags: string[] | null
+          author: {
+            username: string
+            full_name: string | null
+          }
+        }[]
+      }
       add_subscriber: {
         Args: { subscriber_email: string }
         Returns: { id: string }

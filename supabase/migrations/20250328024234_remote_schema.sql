@@ -1,18 +1,9 @@
--- Drop the function if it exists
-DROP FUNCTION IF EXISTS public.get_published_posts_with_authors();
+set check_function_bodies = off;
 
--- Recreate with correct types
-CREATE FUNCTION public.get_published_posts_with_authors()
-RETURNS TABLE (
-  id uuid,
-  title varchar,
-  excerpt text,
-  slug varchar,
-  created_at timestamp with time zone,
-  published_at timestamp with time zone,
-  tags text[],
-  author json
-) AS $$
+CREATE OR REPLACE FUNCTION public.get_published_posts_with_authors()
+ RETURNS TABLE(id uuid, title character varying, excerpt text, slug character varying, created_at timestamp with time zone, published_at timestamp with time zone, tags text[], author json)
+ LANGUAGE plpgsql
+AS $function$
 BEGIN
   RETURN QUERY
   SELECT 
@@ -21,7 +12,7 @@ BEGIN
     p.excerpt, 
     p.slug, 
     p.created_at, 
-    p.published_at,
+    p.published_at, 
     p.tags,
     COALESCE(
       json_build_object(
@@ -42,4 +33,7 @@ BEGIN
   ORDER BY
     p.published_at DESC NULLS LAST;
 END;
-$$ LANGUAGE plpgsql; 
+$function$
+;
+
+

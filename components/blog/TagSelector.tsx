@@ -52,7 +52,7 @@ export default function TagSelector({ selectedTags, onChange }: TagSelectorProps
 
     if (!error && data) {
       setTags([...tags, data])
-      onChange([...selectedTags, data.id])
+      onChange([...selectedTags, data.name])
       setNewTag('')
     }
   }
@@ -63,14 +63,14 @@ export default function TagSelector({ selectedTags, onChange }: TagSelectorProps
         {tags.map((tag) => (
           <Badge
             key={tag.id}
-            variant={selectedTags.includes(tag.id) ? "default" : "secondary"}
+            variant={selectedTags.includes(tag.name) ? "default" : "secondary"}
             className="cursor-pointer hover:opacity-80"
             onClick={() => {
-              const isSelected = selectedTags.includes(tag.id)
+              const isSelected = selectedTags.includes(tag.name)
               onChange(
                 isSelected
-                  ? selectedTags.filter((id) => id !== tag.id)
-                  : [...selectedTags, tag.id]
+                  ? selectedTags.filter((name) => name !== tag.name)
+                  : [...selectedTags, tag.name]
               )
             }}
           >

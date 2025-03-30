@@ -44,24 +44,31 @@ export function DashboardNav() {
   const pathname = usePathname()
 
   return (
-    <nav className="w-64 min-h-screen p-4 border-r bg-muted/40">
+    <nav className="w-64 p-6 border-r overflow-y-auto">
       <div className="space-y-4">
-        <div className="py-2">
+        <div className="pb-2">
           <h2 className="text-lg font-semibold tracking-tight">Dashboard</h2>
         </div>
         <div className="space-y-1">
           {routes.map((route) => (
             <Button
               key={route.href}
-              variant={pathname === route.href ? "secondary" : "ghost"}
+              variant="ghost"
               className={cn(
-                "w-full justify-start",
-                pathname === route.href && "bg-muted"
+                "w-full justify-start transition-colors",
+                pathname === route.href 
+                  ? "bg-primary/10 text-primary font-medium hover:bg-primary/15"
+                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
               )}
               asChild
             >
               <Link href={route.href}>
-                <route.icon className="w-4 h-4 mr-2" />
+                <route.icon className={cn(
+                  "w-4 h-4 mr-2",
+                  pathname === route.href 
+                    ? "text-primary"
+                    : "text-muted-foreground"
+                )} />
                 {route.label}
               </Link>
             </Button>

@@ -43,20 +43,56 @@ export default function PostForm({ post }: PostFormProps) {
         slug: slug || title.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
         status,
         author_id: user.id,
-        tags: selectedTags,
         ...(status === 'published' ? { published_at: new Date().toISOString() } : {}),
       }
 
-      const { error: dbError } = post
+      // Insert or update the post
+      const { data: postResult, error: postError } = post
         ? await supabase
             .from('posts')
             .update(postData)
             .eq('id', post.id)
+            .select()
+            .single()
         : await supabase
             .from('posts')
             .insert([postData])
+            .select()
+            .single()
 
-      if (dbError) throw dbError
+      if (postError) throw postError
+
+      // Delete existing tag associations if updating
+      if (post) {
+        await supabase
+          .from('posts_tags')
+          .delete()
+          .eq('post_id', post.id)
+      }
+
+      // Insert new tag associations
+      if (selectedTags.length > 0) {
+        // First, get the tag IDs for the selected tag names
+        const { data: tagData, error: tagQueryError } = await supabase
+          .from('tags')
+          .select('id')
+          .in('name', selectedTags)
+
+        if (tagQueryError) throw tagQueryError
+
+        if (tagData && tagData.length > 0) {
+          const tagAssociations = tagData.map(tag => ({
+            post_id: postResult.id,
+            tag_id: tag.id
+          }))
+
+          const { error: tagError } = await supabase
+            .from('posts_tags')
+            .insert(tagAssociations)
+
+          if (tagError) throw tagError
+        }
+      }
 
       router.push('/dashboard')
       router.refresh()

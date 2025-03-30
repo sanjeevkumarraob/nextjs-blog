@@ -1,8 +1,8 @@
--- Drop the function if it exists
+-- First drop the existing function
 DROP FUNCTION IF EXISTS public.get_published_posts_with_authors();
 
--- Recreate with correct types
-CREATE FUNCTION public.get_published_posts_with_authors()
+-- Then recreate with correct types
+CREATE OR REPLACE FUNCTION public.get_published_posts_with_authors()
 RETURNS TABLE (
   id uuid,
   title varchar,
@@ -21,7 +21,7 @@ BEGIN
     p.excerpt, 
     p.slug, 
     p.created_at, 
-    p.published_at,
+    p.published_at, 
     p.tags,
     COALESCE(
       json_build_object(

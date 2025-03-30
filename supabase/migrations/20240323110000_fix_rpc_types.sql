@@ -1,10 +1,10 @@
--- Fix type mismatches by casting columns
+-- Fix type mismatches in the RPC function
 CREATE OR REPLACE FUNCTION public.get_published_posts_with_authors()
 RETURNS TABLE (
   id uuid,
-  title text,
+  title varchar,  -- Changed from text to varchar
   excerpt text,
-  slug text,
+  slug varchar,   -- Probably also varchar in your table
   created_at timestamp with time zone,
   published_at timestamp with time zone,
   tags text[],
@@ -14,9 +14,9 @@ BEGIN
   RETURN QUERY
   SELECT 
     p.id, 
-    p.title::text,  -- Cast varchar to text
+    p.title, 
     p.excerpt, 
-    p.slug::text,   -- Cast varchar to text
+    p.slug, 
     p.created_at, 
     p.published_at, 
     p.tags,

@@ -12,7 +12,7 @@ export default async function BlogPostPage({
   const cookieStore = cookies()
   const supabase = createServerComponentClient({ cookies: () => cookieStore })
   
-  console.log("Fetching post with slug:", slug)
+  // console.log("Fetching post with slug:", slug)
 
   // Use your RPC function
   const { data: postData, error: rpcError } = await supabase.rpc(
@@ -24,7 +24,7 @@ export default async function BlogPostPage({
     console.error("RPC Error:", rpcError)
   }
 
-  console.log("Post data from RPC:", postData)
+  // console.log("Post data from RPC:", postData)
 
   // Fallback to direct query if RPC fails
   if (!postData || postData.length === 0) {
