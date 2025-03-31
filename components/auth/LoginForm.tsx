@@ -109,14 +109,14 @@ export default function LoginForm() {
         >
           Forgot your password?
         </Link>
-        <Link 
+        {/* <Link 
           href="/magic-link" 
           className="text-sm text-muted-foreground hover:text-primary"
           onClick={(e) => loading && e.preventDefault()}
         >
           Sign in with Magic Link
-        </Link>
-        <div className="text-sm text-muted-foreground">
+        </Link> */}
+        {/* <div className="text-sm text-muted-foreground">
           Don't have an account?{' '}
           <Link 
             href="/signup" 
@@ -125,7 +125,7 @@ export default function LoginForm() {
           >
             Sign up
           </Link>
-        </div>
+        </div> */}
       </CardFooter>
     </Card>
   )
