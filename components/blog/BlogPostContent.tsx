@@ -6,12 +6,28 @@ import { format } from 'date-fns'
 import { Card } from "@/components/ui/card"
 import ShareButtons from '@/components/blog/ShareButtons'
 import { ArrowLeft, PenSquare, Trash2 } from 'lucide-react'
-import hljs from 'highlight.js'
-import 'highlight.js/styles/github.css'
+import hljs from 'highlight.js/lib/core'
+import javascript from 'highlight.js/lib/languages/javascript'
+import typescript from 'highlight.js/lib/languages/typescript'
+import bash from 'highlight.js/lib/languages/bash'
+import sql from 'highlight.js/lib/languages/sql'
+import json from 'highlight.js/lib/languages/json'
+import xml from 'highlight.js/lib/languages/xml'
+import css from 'highlight.js/lib/languages/css'
+import '@/app/styles/dracula.css'
 import { ViewTracker } from './ViewTracker'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { Button } from "@/components/ui/button"
 import { toast } from 'sonner'
+
+// Register languages
+hljs.registerLanguage('javascript', javascript)
+hljs.registerLanguage('typescript', typescript)
+hljs.registerLanguage('bash', bash)
+hljs.registerLanguage('sql', sql)
+hljs.registerLanguage('json', json)
+hljs.registerLanguage('xml', xml)
+hljs.registerLanguage('css', css)
 
 interface BlogPostProps {
   post: any;
@@ -31,11 +47,11 @@ export default function BlogPostContent({ post, url }: BlogPostProps) {
   }, [supabase])
 
   useEffect(() => {
-    // Apply syntax highlighting only (no image URL rewriting)
+    // Apply syntax highlighting
     document.querySelectorAll('pre code').forEach((block) => {
-      hljs.highlightElement(block as HTMLElement);
-    });
-  }, [post.content]);
+      hljs.highlightElement(block as HTMLElement)
+    })
+  }, [post.content])
 
   const handleDeletePost = async () => {
     if (!confirm('Are you sure you want to delete this post?')) return
@@ -108,7 +124,7 @@ export default function BlogPostContent({ post, url }: BlogPostProps) {
         
         <article className="bg-white rounded-lg shadow-sm p-6 md:p-8">
           <div 
-            className="prose prose-lg max-w-none prose-headings:font-bold prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl prose-pre:bg-gray-100 prose-pre:rounded-md prose-pre:p-4 prose-code:text-pink-500 prose-code:bg-gray-100 prose-code:rounded prose-code:px-1 prose-a:text-blue-600 prose-img:rounded-lg prose-img:mx-auto prose-img:max-h-96 prose-img:object-contain"
+            className="prose prose-lg max-w-none prose-headings:font-bold prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl prose-pre:bg-zinc-900 prose-pre:rounded-md prose-pre:my-6 prose-pre:shadow-lg prose-code:text-pink-300 prose-code:bg-zinc-800 prose-code:rounded prose-code:px-1 prose-a:text-blue-600 prose-img:rounded-lg prose-img:mx-auto prose-img:max-h-96 prose-img:object-contain"
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
         </article>
