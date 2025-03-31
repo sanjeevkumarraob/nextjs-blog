@@ -46,28 +46,39 @@ export default function PostForm({ post }: PostFormProps) {
         ...(status === 'published' ? { published_at: new Date().toISOString() } : {}),
       }
 
+      let postResult
       // Insert or update the post
-      const { data: postResult, error: postError } = post
-        ? await supabase
-            .from('posts')
-            .update(postData)
-            .eq('id', post.id)
-            .select()
-            .single()
-        : await supabase
-            .from('posts')
-            .insert([postData])
-            .select()
-            .single()
+      if (post) {
+        const { data, error: postError } = await supabase
+          .from('posts')
+          .update(postData)
+          .eq('id', post.id)
+          .select()
+          .single()
 
-      if (postError) throw postError
+        if (postError) throw postError
+        postResult = data
+      } else {
+        const { data, error: postError } = await supabase
+          .from('posts')
+          .insert([postData])
+          .select()
+          .single()
+
+        if (postError) throw postError
+        postResult = data
+      }
+
+      if (!postResult) throw new Error('Failed to save post')
 
       // Delete existing tag associations if updating
       if (post) {
-        await supabase
+        const { error: deleteError } = await supabase
           .from('posts_tags')
           .delete()
           .eq('post_id', post.id)
+
+        if (deleteError) throw deleteError
       }
 
       // Insert new tag associations
@@ -91,12 +102,29 @@ export default function PostForm({ post }: PostFormProps) {
             .insert(tagAssociations)
 
           if (tagError) throw tagError
+
+          // Update the tags array in the posts table
+          const { error: updateError } = await supabase
+            .from('posts')
+            .update({ tags: selectedTags })
+            .eq('id', postResult.id)
+
+          if (updateError) throw updateError
         }
+      } else {
+        // If no tags are selected, update the tags array to be empty
+        const { error: updateError } = await supabase
+          .from('posts')
+          .update({ tags: [] })
+          .eq('id', postResult.id)
+
+        if (updateError) throw updateError
       }
 
       router.push('/dashboard')
       router.refresh()
     } catch (error: any) {
+      console.error('Error saving post:', error)
       setError(error.message)
     } finally {
       setLoading(false)
@@ -109,7 +137,7 @@ export default function PostForm({ post }: PostFormProps) {
         <CardTitle>{post ? 'Edit Post' : 'Create New Post'}</CardTitle>
       </CardHeader>
       <CardContent>
-        <form className="space-y-6">
+        <form onSubmit={(e) => e.preventDefault()} className="space-y-6">
           <div className="space-y-2">
             <Label htmlFor="title">Title</Label>
             <Input

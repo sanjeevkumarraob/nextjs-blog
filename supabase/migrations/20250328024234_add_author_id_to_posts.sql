@@ -1,17 +1,12 @@
+set check_function_bodies = off;
+
 -- Drop the existing function first
 DROP FUNCTION IF EXISTS public.get_published_posts_with_authors();
--- Fix type mismatches in the RPC function
+
 CREATE OR REPLACE FUNCTION public.get_published_posts_with_authors()
-RETURNS TABLE (
-  id uuid,
-  title varchar,  -- Changed from text to varchar
-  excerpt text,
-  slug varchar,   -- Probably also varchar in your table
-  created_at timestamp with time zone,
-  published_at timestamp with time zone,
-  tags text[],
-  author json
-) AS $$
+ RETURNS TABLE(id uuid, title character varying, excerpt text, slug character varying, created_at timestamp with time zone, published_at timestamp with time zone, tags text[], author json, author_id uuid)
+ LANGUAGE plpgsql
+AS $function$
 BEGIN
   RETURN QUERY
   SELECT 
@@ -31,7 +26,8 @@ BEGIN
         'username', 'Unknown',
         'full_name', null
       )
-    ) as author
+    ) as author,
+    p.author_id
   FROM 
     posts p
   LEFT JOIN 
@@ -41,4 +37,7 @@ BEGIN
   ORDER BY
     p.published_at DESC NULLS LAST;
 END;
-$$ LANGUAGE plpgsql; 
+$function$
+;
+
+

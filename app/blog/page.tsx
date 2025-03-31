@@ -7,8 +7,9 @@ import { formatDistanceToNow, format, parseISO } from 'date-fns'
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
 import { Button } from '@/components/ui/button'
 import { Badge } from "@/components/ui/badge"
-import { X } from 'lucide-react'
+import { X, PenSquare, Trash2 } from 'lucide-react'
 import type { Database } from '@/types/database'
+import { toast } from 'sonner'
 
 type Post = Database['public']['Functions']['get_published_posts_with_authors']['Returns'][0]
 
@@ -17,12 +18,14 @@ export default function BlogsPage() {
   const [selectedTag, setSelectedTag] = useState<string | null>(null)
   const [selectedMonth, setSelectedMonth] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
+  const [user, setUser] = useState<any>(null)
   const supabase = createClientComponentClient<Database>()
 
   useEffect(() => {
     const fetchPosts = async () => {
       setLoading(true)
       const { data, error } = await supabase.rpc('get_published_posts_with_authors')
+      console.log('Posts:', data)
       if (error) {
         console.error('Error fetching posts:', error)
       } else {
@@ -31,8 +34,33 @@ export default function BlogsPage() {
       setLoading(false)
     }
 
+    const checkUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser()
+      setUser(user)
+    }
+
     fetchPosts()
+    checkUser()
   }, [supabase])
+
+  const handleDeletePost = async (postId: string) => {
+    if (!confirm('Are you sure you want to delete this post?')) return
+
+    try {
+      const { error } = await supabase
+        .from('posts')
+        .delete()
+        .eq('id', postId)
+
+      if (error) throw error
+
+      setPosts(posts.filter(post => post.id !== postId))
+      toast.success('Post deleted successfully')
+    } catch (error) {
+      console.error('Error deleting post:', error)
+      toast.error('Failed to delete post')
+    }
+  }
 
   // Generate archive data
   const archives = posts.reduce<Record<string, number>>((acc, post: Post) => {
@@ -115,14 +143,35 @@ export default function BlogsPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredPosts.map((post: Post) => (
                 <Card key={post.id} className="flex flex-col">
-                  <CardHeader className="pb-3">
-                    <CardTitle className="text-xl">
-                      <Link 
-                        href={`/blog/${post.slug}`}
-                        className="hover:underline text-primary line-clamp-2"
-                      >
+                  <CardHeader>
+                    <CardTitle>
+                      <Link href={`/blog/${post.slug}`} className="text-primary hover:underline">
                         {post.title}
                       </Link>
+                      {user && user.id === post.author_id && (
+                        <div className="flex gap-2 mt-2">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            asChild
+                            className="h-8 px-2"
+                          >
+                            <Link href={`/blog/${post.slug}/edit`}>
+                              <PenSquare className="h-4 w-4 mr-2" />
+                              Edit
+                            </Link>
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-8 px-2 text-destructive hover:text-destructive-foreground hover:bg-destructive"
+                            onClick={() => handleDeletePost(post.id)}
+                          >
+                            <Trash2 className="h-4 w-4 mr-2" />
+                            Delete
+                          </Button>
+                        </div>
+                      )}
                     </CardTitle>
                   </CardHeader>
                   

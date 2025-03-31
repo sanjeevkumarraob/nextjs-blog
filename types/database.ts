@@ -148,6 +148,7 @@ export interface Database {
             username: string
             full_name: string | null
           }
+          author_id: string
         }[]
       }
       add_subscriber: {

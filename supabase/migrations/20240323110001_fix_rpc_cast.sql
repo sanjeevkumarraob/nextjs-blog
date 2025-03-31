@@ -1,16 +1,24 @@
-set check_function_bodies = off;
-
+-- Drop the existing function first
+DROP FUNCTION IF EXISTS public.get_published_posts_with_authors();
+-- Fix type mismatches by casting columns
 CREATE OR REPLACE FUNCTION public.get_published_posts_with_authors()
- RETURNS TABLE(id uuid, title character varying, excerpt text, slug character varying, created_at timestamp with time zone, published_at timestamp with time zone, tags text[], author json)
- LANGUAGE plpgsql
-AS $function$
+RETURNS TABLE (
+  id uuid,
+  title text,
+  excerpt text,
+  slug text,
+  created_at timestamp with time zone,
+  published_at timestamp with time zone,
+  tags text[],
+  author json
+) AS $$
 BEGIN
   RETURN QUERY
   SELECT 
     p.id, 
-    p.title, 
+    p.title::text,  -- Cast varchar to text
     p.excerpt, 
-    p.slug, 
+    p.slug::text,   -- Cast varchar to text
     p.created_at, 
     p.published_at, 
     p.tags,
@@ -33,7 +41,4 @@ BEGIN
   ORDER BY
     p.published_at DESC NULLS LAST;
 END;
-$function$
-;
-
-
+$$ LANGUAGE plpgsql; 

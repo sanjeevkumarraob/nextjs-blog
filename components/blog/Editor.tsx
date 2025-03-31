@@ -115,10 +115,30 @@ export function Editor({ initialContent = '', onChange, placeholder = 'Start wri
   };
 
   const handleLinkAdd = () => {
+    // If there's already a link, update it
+    if (editor.isActive('link')) {
+      const attrs = editor.getAttributes('link')
+      const url = window.prompt('Edit the URL', attrs.href)
+      if (url) {
+        editor.chain().focus().extendMarkRange('link').updateAttributes('link', { href: url }).run()
+      }
+      return
+    }
+
+    // If there's no selection, don't do anything
+    if (editor.state.selection.empty) {
+      toast.error('Please select some text to add a link')
+      return
+    }
+
     const url = window.prompt('Enter the URL')
     if (url) {
       editor.chain().focus().setLink({ href: url }).run()
     }
+  }
+
+  const handleLinkRemove = () => {
+    editor.chain().focus().unsetLink().run()
   }
 
   return (
@@ -192,11 +212,29 @@ export function Editor({ initialContent = '', onChange, placeholder = 'Start wri
           <Button
             variant="ghost"
             size="sm"
-            onClick={handleLinkAdd}
+            onClick={(e) => {
+              e.preventDefault()
+              e.stopPropagation()
+              handleLinkAdd()
+            }}
             className={editor.isActive('link') ? 'bg-muted' : ''}
           >
             <LinkIcon className="h-4 w-4" />
           </Button>
+          {editor.isActive('link') && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={(e) => {
+                e.preventDefault()
+                e.stopPropagation()
+                handleLinkRemove()
+              }}
+              className="text-destructive hover:text-destructive"
+            >
+              <LinkIcon className="h-4 w-4" />
+            </Button>
+          )}
           <Button
             variant="ghost"
             size="sm"
